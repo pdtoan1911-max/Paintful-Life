@@ -1,0 +1,48 @@
+@reference "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root{
+        --pf-primary: #7fcf9b;
+        --pf-accent: #2b8a6f;
+        --pf-muted: #f7f8f9;
+    }
+    html {
+        font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    html{height:100%}
+    body{
+        background-color:rgb(255, 255, 255);
+        margin: 0;
+    }
+    a {
+        @apply no-underline;
+    }
+}
+
+@layer components {
+    .pf-card{@apply bg-white rounded-xl shadow-md overflow-hidden}
+    .pf-btn{@apply inline-block bg-[var(--pf-accent)] text-white px-4 py-2 rounded-lg transition transform hover:-translate-y-0.5}
+    .pf-badge{@apply absolute -right-2 -top-2 bg-orange-400 text-white rounded-full text-xs px-2 py-0.5}
+    .pf-hero-slide{@apply absolute inset-0 opacity-0 translate-x-6 transition-all duration-500}
+    .pf-hero-slide.active{@apply opacity-100 translate-x-0}
+    .pf-hero-dots{@apply absolute left-1/2 bottom-3 transform -translate-x-1/2 flex gap-2}
+    .pf-hero-dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,0.6);cursor:pointer}
+    .pf-hero-dot.active{background:var(--pf-accent)}
+    /* generic hero slider classes used by JS */
+    .hero-slider{position:relative;height:calc(100vh - 96px);overflow:hidden}
+    .hero-slide{@apply absolute inset-0 opacity-0 translate-x-6 transition-all duration-500}
+    .hero-slide.active{@apply opacity-100 translate-x-0}
+    .hero-dots{@apply absolute left-1/2 bottom-6 transform -translate-x-1/2 flex gap-2 z-20}
+    .hero-dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,0.6);cursor:pointer}
+    .hero-dot.active{background:var(--pf-accent)}
+}
+
+@layer utilities {
+    .pf-shadow-scroll{box-shadow:0 8px 24px rgba(15,23,42,0.06)}
+}
+
