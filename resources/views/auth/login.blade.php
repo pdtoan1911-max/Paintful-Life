@@ -1,24 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-    <div style="max-width:420px;margin:40px auto">
-        <div class="card" style="padding:20px;text-align:center">
-            <h3>Đăng nhập</h3>
-            <form method="POST" action="/login">
+    <div class="max-w-md mx-auto py-12 px-4">
+        <div class="pf-card p-8">
+            <h1 class="text-2xl font-semibold text-center">ĐĂNG NHẬP TÀI KHOẢN</h1>
+            <p class="text-center text-sm text-gray-600 mt-2">Bạn chưa có tài khoản ? <a href="{{ route('register') }}" class="text-[var(--pf-accent)] font-medium">Đăng ký tại đây</a></p>
+
+            <form method="POST" action="/login" class="mt-6">
                 @csrf
-                <div style="text-align:left;margin-top:8px">
-                    <label>Email hoặc SĐT</label>
-                    <input name="login" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #eee">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Email hoặc SĐT <span class="text-red-500">*</span></label>
+                    <input name="login" required placeholder="Email hoặc số điện thoại" class="mt-1 block w-full rounded-md border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]" />
                 </div>
-                <div style="text-align:left;margin-top:8px">
-                    <label>Mật khẩu</label>
-                    <input name="password" type="password" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #eee">
+
+                <div class="mb-2">
+                    <label class="block text-sm font-medium text-gray-700">Mật khẩu <span class="text-red-500">*</span></label>
+                    <input name="password" type="password" required placeholder="Mật khẩu" class="mt-1 block w-full rounded-md border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]" />
                 </div>
-                <div style="margin-top:12px">
-                    <button class="btn-primary" type="submit">Đăng nhập</button>
+
+                <div class="flex justify-between items-center text-sm mt-2">
+                    <div></div>
+                    <a href="#" class="text-[var(--pf-accent)]">Quên mật khẩu? Nhấn vào đây</a>
+                </div>
+
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-[var(--pf-accent)] text-white font-semibold py-3 rounded-full shadow-md hover:brightness-95 transition">Đăng nhập</button>
                 </div>
             </form>
-            <div style="margin-top:12px">Chưa có tài khoản? <a href="{{ route('register') }}">Đăng ký</a></div>
+
+            <div class="mt-4 text-center text-sm text-gray-600">Hoặc <a href="{{ route('register') }}" class="text-[var(--pf-accent)] font-medium">Đăng ký</a> nếu bạn chưa có tài khoản</div>
         </div>
     </div>
 @endsection

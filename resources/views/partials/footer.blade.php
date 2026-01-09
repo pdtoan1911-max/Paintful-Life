@@ -10,7 +10,7 @@
                 <!-- Brand -->
                 <div>
                     <a href="{{ route('home') }}" class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-pf-accent text-white flex items-center justify-center font-bold text-lg">
+                        <div class="w-12 h-12 rounded-xl bg-[var(--pf-accent)] text-white flex items-center justify-center font-bold text-lg">
                             PL
                         </div>
                         <div>

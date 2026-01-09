@@ -24,10 +24,13 @@ class ProductController extends Controller
             $query->where('price', '<=', $request->input('max_price'));
         }
 
-        $products = $query->paginate(12);
+        $products = $query->paginate(12)->withQueryString();
         $categories = Category::where('is_active', 1)->get();
 
-        return view('products.index', compact('products', 'categories'));
+        // Suggested / featured products for lower suggestion section
+        $suggested = Product::where('is_active',1)->where('is_featured',1)->take(8)->get();
+
+        return view('products.index', compact('products', 'categories', 'suggested'));
     }
 
     public function show($id)

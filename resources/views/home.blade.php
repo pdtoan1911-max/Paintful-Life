@@ -67,16 +67,40 @@
         <h2 class="text-xl font-bold mb-4">Danh mục phổ biến</h2>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            @foreach(['Nội thất','Ngoại thất','Trẻ em','Chống thấm'] as $cat)
-                <a href="#" class="relative rounded-xl overflow-hidden group">
-                    <img src="{{ asset('images/categories/placeholder'.($loop->index + 1).'.png') }}"
+            {{-- @foreach(['Nội thất','Ngoại thất','Trẻ em','Chống thấm'] as $cat) --}}
+                <a href="products?category=1" class="relative rounded-xl overflow-hidden group">
+                    <img src="{{ asset('images/categories/placeholder1.png') }}"
                          class="w-full h-32 object-cover group-hover:scale-105 transition"
                          loading="lazy">
                     <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <span class="text-white font-semibold">{{ $cat }}</span>
+                        <span class="text-white font-semibold">Nội thất</span>
                     </div>
                 </a>
-            @endforeach
+                <a href="products?category=2" class="relative rounded-xl overflow-hidden group">
+                    <img src="{{ asset('images/categories/placeholder2.png') }}"
+                         class="w-full h-32 object-cover group-hover:scale-105 transition"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <span class="text-white font-semibold">Ngoại thất</span>
+                    </div>
+                </a>
+                <a href="products?category=3" class="relative rounded-xl overflow-hidden group">
+                    <img src="{{ asset('images/categories/placeholder3.png') }}"
+                         class="w-full h-32 object-cover group-hover:scale-105 transition"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <span class="text-white font-semibold">Trẻ em</span>
+                    </div>
+                </a>
+                <a href="products?category=3" class="relative rounded-xl overflow-hidden group">
+                    <img src="{{ asset('images/categories/placeholder4.png') }}"
+                         class="w-full h-32 object-cover group-hover:scale-105 transition"
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <span class="text-white font-semibold">Chống thấm</span>
+                    </div>
+                </a>
+            {{-- @endforeach --}}
         </div>
     </div>
 </section>
@@ -96,34 +120,22 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             @foreach($featuredProducts as $product)
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <a href="{{ route('products.show',$product->product_id) }}">
-                        <img src="{{ $product->image_url ?? asset('images/products/placeholder.png') }}"
-                            class="w-full h-40 object-cover"
-                            loading="lazy">
+                <div class="pf-product-card">
+                    <a href="{{ route('products.show',$product->product_id) }}" class="block pf-product-image" style="padding-bottom:60%">
+                        <img src="{{ $product->image_url ?? asset('images/products/placeholder.png') }}" loading="lazy" alt="{{ $product->product_name }}">
                     </a>
 
-                    <div class="p-3">
+                    <div class="pf-product-body">
                         <a href="{{ route('products.show',$product->product_id) }}">
-                            <h3 class="text-sm font-semibold line-clamp-2 h-4">
-                                {{ $product->product_name }}
-                            </h3>
-
-                            <p class="text-xs text-gray-500 mt-1 h-6">
-                                {{ Str::limit($product->description, 50) }}
-                            </p>
+                            <h3 class="pf-product-title">{{ $product->product_name }}</h3>
+                            <p class="text-xs text-gray-500 mt-1">{{ Str::limit($product->description, 50) }}</p>
                         </a>
 
-                        <div class="mt-2 flex items-center justify-between">
-                            <span class="text-[var(--pf-accent)] font-bold">
-                                {{ number_format($product->price,0,',','.') }}₫
-                            </span>
-
-                            <button
-                                class="btn-add bg-[var(--pf-accent)] text-white text-xs px-3 py-2 rounded hover:opacity-90 transition"
-                                data-id="{{ $product->product_id }}">
-                                Thêm vào giỏ
-                            </button>
+                        <div class="mt-2 flex items-center justify-between gap-3">
+                            <span class="pf-product-price">{{ number_format($product->price,0,',','.') }}₫</span>
+                            <div class="flex-shrink-0">
+                                <button class="btn-add pf-product-cta" data-id="{{ $product->product_id }}">Thêm vào giỏ</button>
+                            </div>
                         </div>
                     </div>
                 </div>

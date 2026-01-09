@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between h-16">
             <!-- Brand -->
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg bg-pf-accent text-white flex items-center justify-center font-bold">
+                <div class="w-10 h-10 rounded-lg bg-[var(--pf-accent)] text-white flex items-center justify-center font-bold">
                     PL
                 </div>
                 <span class="text-lg font-semibold hidden sm:inline">

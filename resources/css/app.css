@@ -40,6 +40,15 @@
     .hero-dots{@apply absolute left-1/2 bottom-6 transform -translate-x-1/2 flex gap-2 z-20}
     .hero-dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,0.6);cursor:pointer}
     .hero-dot.active{background:var(--pf-accent)}
+
+    /* Product card shared styles */
+    .pf-product-card{@apply bg-white rounded-xl shadow-sm overflow-hidden transition hover:shadow-lg}
+    .pf-product-image{@apply bg-gray-50 overflow-hidden relative}
+    .pf-product-image img{@apply absolute inset-0 w-full h-full object-cover transition-transform duration-300}
+    .pf-product-body{@apply p-3}
+    .pf-product-title{@apply text-sm font-medium text-gray-800 line-clamp-2}
+    .pf-product-price{@apply text-[var(--pf-accent)] font-bold}
+    .pf-product-cta{@apply inline-flex items-center gap-2 bg-[var(--pf-accent)] text-white px-4 py-2 rounded-md text-sm transition hover:opacity-95 whitespace-nowrap min-w-[110px] justify-center}
 }
 
 @layer utilities {

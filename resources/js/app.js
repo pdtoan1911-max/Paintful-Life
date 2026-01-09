@@ -24,6 +24,9 @@ document.addEventListener('click', function (e) {
         addToCart(id, qty);
         t.innerText = 'Đã thêm';
         setTimeout(() => t.innerText = 'Thêm vào giỏ', 1200);
+        
+        const badge = document.getElementById('cart-badge');
+        badge.classList.remove('hidden');
     }
 });
 
