@@ -15,8 +15,6 @@
     </main>
 
     @include('partials.footer')
-
-    <script src="/resources/js/app.js"></script>
     @stack('scripts')
 </body>
 </html>

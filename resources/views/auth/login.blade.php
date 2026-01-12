@@ -9,6 +9,12 @@
             <form method="POST" action="/login" class="mt-6">
                 @csrf
 
+                @if ($errors->any())
+                    <div class="mb-4 text-sm text-red-600">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">Email hoặc SĐT <span class="text-red-500">*</span></label>
                     <input name="login" required placeholder="Email hoặc số điện thoại" class="mt-1 block w-full rounded-md border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]" />

@@ -40,4 +40,15 @@ class ProductController extends Controller
 
         return view('products.show', compact('product', 'related'));
     }
+
+    public function edit(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->product_name = $request->input('product_name', $product->product_name);
+        $product->price = $request->input('price', $product->price);
+        $product->description = $request->input('description', $product->description);
+        $product->is_active = $request->input('is_active', $product->is_active);
+        $product->save();
+        return response()->json(['success' => true], 200);
+    }
 }

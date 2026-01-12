@@ -53,5 +53,13 @@
 
 @layer utilities {
     .pf-shadow-scroll{box-shadow:0 8px 24px rgba(15,23,42,0.06)}
+    
+    .bg-admin-sidebar {
+        @apply bg-gradient-to-b from-gray-900 to-gray-800;
+    }
+
+    .bg-admin-active {
+        @apply bg-gray-700 text-white border-l-4 border-indigo-500;
+    }
 }
 

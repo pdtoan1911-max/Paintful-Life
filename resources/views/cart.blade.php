@@ -2,7 +2,7 @@
 
 @section('content')
     <h3>Giỏ hàng</h3>
-    <div class="card h-80" style="padding:12px">
+    <div class="card min-h-80" style="padding:12px">
         <table style="width:100%;border-collapse:collapse">
             <thead>
                 <tr style="text-align:left;color:#666;border-bottom:1px solid #eee">
@@ -50,7 +50,7 @@
             <!-- Continue shopping -->
             <a href="{{ route('products.index') }}"
             class="inline-flex items-center gap-2 text-sm font-medium
-                    text-gray-600 hover:text-pf-accent transition">
+                    text-[var(--pf-accent)] hover:text-pf-accent transition">
                 <span class="text-lg">←</span>
                 Tiếp tục mua sắm
             </a>
