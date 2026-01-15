@@ -256,10 +256,7 @@ Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(fun
         return redirect()->route('admin.products.index')->with('success', 'Product deleted.');
     })->name('products.destroy');
 
-    Route::get('/orders', function () {
-        $orders = App\Models\Order::with('orderItems')->paginate(20);
-        return view('admin.orders.index', compact('orders'));
-    })->name('orders.index');
+    Route::get('/orders', [DashboardController::class, 'indexOrder'])->name('orders.index');
 
     Route::get('/orders/{order}', function (App\Models\Order $order) {
         $order->load('orderItems.product');

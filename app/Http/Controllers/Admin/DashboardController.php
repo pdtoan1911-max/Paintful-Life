@@ -153,4 +153,24 @@ class DashboardController extends Controller
         $user->delete();
         return redirect()->back()->with('success', 'User deleted successfully.');
     }
+
+    public function indexOrder(Request $request)
+    {
+        $query = Order::query();
+
+        if ($q = $request->query('q')) {
+            $query->where('customer_name', 'like', "%{$q}%");
+        }
+
+        if ($start = $request->query('start_date')) {
+            $query->whereDate('created_at', '>=', $start);
+        }
+        if ($end = $request->query('end_date')) {
+            $query->whereDate('created_at', '<=', $end);
+        }
+
+        $orders = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.orders.index', compact('orders'));
+    }
 }

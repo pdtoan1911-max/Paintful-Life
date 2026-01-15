@@ -4,6 +4,26 @@
 
 @section('content')
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <form method="GET" class="flex items-center gap-2">
+        @if(request('q'))<input type="hidden" name="q" value="{{ request('q') }}">@endif
+        <label class="text-sm text-gray-600">Từ</label>
+        <input type="date" name="start_date" value="{{ request('start_date') }}" class="px-2 py-1 border rounded">
+        <label class="text-sm text-gray-600">Đến</label>
+        <input type="date" name="end_date" value="{{ request('end_date') }}" class="px-2 py-1 border rounded">
+
+      </form>
+
+      <form method="GET" class="ml-auto">
+        @if(request('start_date'))<input type="hidden" name="start_date" value="{{ request('start_date') }}">@endif
+        @if(request('end_date'))<input type="hidden" name="end_date" value="{{ request('end_date') }}">@endif
+        <div class="flex items-center">
+          <input type="search" name="q" placeholder="Tìm theo tên người mua" value="{{ request('q') }}" class="px-3 py-1 border w-64">
+          <button type="submit" class="px-3 py-1 h-[25px] border bg-gray-100">Tìm kiếm</button>
+        </div>
+      </form>
+    </div>
+
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -72,6 +92,43 @@
         </tbody>
       </table>
     </div>
-  </div>
+    @if ($orders instanceof \Illuminate\Pagination\LengthAwarePaginator)
+      <div class="mt-4 flex items-center justify-center">
+        @php $orders->appends(request()->query()); $cur = $orders->currentPage(); $last = $orders->lastPage(); @endphp
 
+        {{-- Back 1 page --}}
+        <a href="{{ $orders->previousPageUrl() ?: '#' }}" class="px-3 py-1 mx-1 rounded {{ $orders->previousPageUrl() ? 'bg-white border' : 'bg-gray-100 text-gray-400' }}" aria-label="Prev">
+          ‹
+        </a>
+
+        {{-- Prev page if exists --}}
+        @if($cur > 1)
+          <a href="{{ $orders->url($cur - 1) }}" class="px-3 py-1 mx-1 rounded bg-white border">{{ $cur - 1 }}</a>
+        @endif
+
+        {{-- Current page --}}
+        <span class="px-3 py-1 mx-1 rounded bg-[var(--pf-accent)] text-white">{{ $cur }}</span>
+
+        {{-- Next page if exists --}}
+        @if($cur < $last)
+          <a href="{{ $orders->url($cur + 1) }}" class="px-3 py-1 mx-1 rounded bg-white border">{{ $cur + 1 }}</a>
+        @endif
+
+        {{-- Forward 1 page --}}
+        <a href="{{ $orders->nextPageUrl() ?: '#' }}" class="px-3 py-1 mx-1 rounded {{ $orders->nextPageUrl() ? 'bg-white border' : 'bg-gray-100 text-gray-400' }}" aria-label="Next">
+          ›
+        </a>
+      </div>
+    @endif
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      dateInputs.forEach(input => {
+        input.addEventListener('change', function () {
+          this.form.submit();
+        });
+      });
+    });
+  </script>
 @endsection
