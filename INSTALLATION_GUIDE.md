@@ -141,13 +141,6 @@ Open http://127.0.0.1:8000 in your browser.
 
 ---
 
-## 8. Optional services
-
-- Queues: `php artisan queue:work` or `php artisan queue:listen`
-- Scheduler: configure Windows Task Scheduler to run `php artisan schedule:run` every minute
-
----
-
 ## Troubleshooting / common errors
 
 - `Vite manifest not found` — run `npm run build` or `npm run dev`.
@@ -160,45 +153,3 @@ php artisan view:clear
 php artisan route:clear
 php artisan config:clear
 php artisan cache:clear
-```
-
-- `BadMethodCallException: Collection::elements does not exist` — pagination calls expect a Paginator. Ensure controller uses `paginate()` (not `get()`), or use a Paginator-aware view or Livewire component.
-
----
-
-## Tips & notes
-
-- If the project uses Livewire, install it:
-
-```powershell
-composer require livewire/livewire
-# in layouts/app.blade.php add @livewireStyles in <head> and @livewireScripts before </body>
-```
-
-- If you want to run everything together, `composer.json` includes `setup` and `dev` scripts. For a one-shot setup you can run:
-
-```powershell
-composer run-script setup
-```
-
-- For CI or production, use `npm run build` and run the app behind a proper web server (Nginx/IIS) and configure environment variables appropriately.
-
----
-
-## What I checked in this repository
-
-- Laravel app skeleton with controllers, models, routes and admin pages.
-- `composer.json` configured for Laravel 12 / PHP 8.2.
-- `package.json` uses Vite for assets.
-- There are Blade views that rely on `public/build/manifest.json` (Vite output) — make sure assets are built.
-- Migration files present under `database/migrations`; seeders in `database/seeders`.
-- Logs: `storage/logs/laravel.log` can show errors such as missing manifest or Blade syntax errors.
-
----
-
-If you want, I can:
-- Add a `Makefile` or PowerShell script to automate these steps on Windows.
-- Add instructions to enable Livewire or any other optional components used by the project.
-- Run the cache-clear commands and/or build assets here for you.
-
-Tell me which of those you'd like next and I'll proceed.
