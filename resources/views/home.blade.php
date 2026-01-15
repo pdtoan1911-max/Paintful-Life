@@ -3,41 +3,50 @@
 @section('content')
 
 <!-- HERO -->
-<section class="relative min-h-[70vh] md:min-h-[95vh] flex items-center">
+<section
+    class="relative min-h-[70vh] md:min-h-[95vh] flex items-center w-screen left-1/2 -translate-x-1/2 max-w-none">
+
+    <!-- Background image -->
     <img
         src="{{ asset('images/banners/banner1.jpg') }}"
         alt="Sơn nội thất cao cấp Paintful Life"
         class="absolute inset-0 w-full h-full object-cover"
         loading="eager"
     >
+
+    <!-- Overlay -->
     <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
 
-    <div class="relative container mx-auto px-4">
-        <div class="max-w-xl text-white">
-            <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
-                Màu sắc chuẩn mực<br class="hidden md:block">
-                cho không gian sống
-            </h1>
-            <p class="mt-4 text-white/90 text-sm md:text-lg">
-                Sơn an toàn, bền màu – tư vấn chuyên nghiệp cho mọi công trình.
-            </p>
+    <!-- Content container -->
+    <div class="relative w-full">
+        <div class="container mx-auto px-4">
+            <div class="max-w-xl text-white">
+                <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
+                    Màu sắc chuẩn mực<br class="hidden md:block">
+                    cho không gian sống
+                </h1>
 
-            <div class="mt-6 flex flex-col sm:flex-row gap-3">
-                <a href="{{ route('products.index') }}"
-                   class="bg-[var(--pf-accent)] text-white px-6 py-3 rounded-lg font-semibold text-center">
-                    Xem sản phẩm
-                </a>
-                <a href="#consult"
-                   class="border border-white/60 text-white px-6 py-3 rounded-lg text-center">
-                    Tư vấn miễn phí
-                </a>
-            </div>
+                <p class="mt-4 text-white/90 text-sm md:text-lg">
+                    Sơn an toàn, bền màu – tư vấn chuyên nghiệp cho mọi công trình.
+                </p>
 
-            <!-- Trust -->
-            <div class="mt-6 flex gap-4 text-xs text-white/80">
-                <span>✔ VOC thấp</span>
-                <span>✔ Bền màu 5 năm</span>
-                <span>✔ 10.000+ KH</span>
+                <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                    <a href="{{ route('products.index') }}"
+                       class="bg-[var(--pf-accent)] text-white px-6 py-3 rounded-lg font-semibold text-center">
+                        Xem sản phẩm
+                    </a>
+
+                    <a href="#consult"
+                       class="border border-white/60 text-white px-6 py-3 rounded-lg text-center">
+                        Tư vấn miễn phí
+                    </a>
+                </div>
+
+                <div class="mt-6 flex gap-4 text-xs text-white/80">
+                    <span>✔ VOC thấp</span>
+                    <span>✔ Bền màu 5 năm</span>
+                    <span>✔ 10.000+ KH</span>
+                </div>
             </div>
         </div>
     </div>
@@ -171,7 +180,7 @@
         </p>
 
         <div class="mt-6 flex flex-col sm:flex-row justify-center gap-3">
-            <a href="#" class="bg-white text-[var(--pf-accent)] px-6 py-3 rounded-lg font-semibold">
+            <a href="/contactus" class="bg-white text-[var(--pf-accent)] px-6 py-3 rounded-lg font-semibold">
                 Nhận tư vấn
             </a>
             <a href="{{ route('products.index') }}"

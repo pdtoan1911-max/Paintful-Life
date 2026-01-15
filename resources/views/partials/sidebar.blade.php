@@ -25,5 +25,13 @@
                 : 'text-gray-600 hover:bg-gray-100' }}">
             Lịch sử mua hàng
         </a>
+
+        <a href="{{ route('password.change') }}"
+           class="block px-4 py-2 rounded-lg
+           {{ request()->routeIs('password.change')
+                ? 'bg-indigo-50 text-indigo-600 font-medium'
+                : 'text-gray-600 hover:bg-gray-100' }}">
+            Đổi mật khẩu
+        </a>
     </nav>
 </div>

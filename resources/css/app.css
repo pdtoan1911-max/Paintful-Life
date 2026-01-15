@@ -10,6 +10,8 @@
         --pf-primary: #7fcf9b;
         --pf-accent: #2b8a6f;
         --pf-muted: #f7f8f9;
+        --pf-danger: #e02424;
+        --pf-warning: #d9534f;
     }
     html {
         font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -21,6 +23,9 @@
     }
     a {
         @apply no-underline;
+    }
+    * {
+    box-sizing: border-box;
     }
 }
 
@@ -48,7 +53,7 @@
     .pf-product-body{@apply p-3}
     .pf-product-title{@apply text-sm font-medium text-gray-800 line-clamp-2}
     .pf-product-price{@apply text-[var(--pf-accent)] font-bold}
-    .pf-product-cta{@apply inline-flex items-center gap-2 bg-[var(--pf-accent)] text-white px-4 py-2 rounded-md text-sm transition hover:opacity-95 whitespace-nowrap min-w-[110px] justify-center}
+    .pf-product-cta{@apply inline-flex items-center gap-2 bg-[var(--pf-accent)] text-white px-4 py-2 rounded-md text-sm transition hover:opacity-95 whitespace-nowrap min-w-[50] justify-center}
 }
 
 @layer utilities {

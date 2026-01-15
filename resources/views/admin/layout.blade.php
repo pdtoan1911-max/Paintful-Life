@@ -33,6 +33,11 @@
                 Dashboard
             </a>
 
+            <a href="{{ url('/admin/brands') }}"
+               class="{{ $navItem }} {{ Request::is('admin/brands*') ? $active : $inactive }}">
+                Brands
+            </a>
+
             <a href="{{ url('/admin/categories') }}"
                class="{{ $navItem }} {{ Request::is('admin/categories*') ? $active : $inactive }}">
                 Categories

@@ -45,7 +45,7 @@ class LoginController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('profile'));
     }
 
     public function logout(Request $request)

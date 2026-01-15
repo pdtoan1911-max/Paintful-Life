@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Header shadow on scroll
     const header = document.getElementById('site-header');
     window.addEventListener('scroll', () => {
-        header.classList.toggle('shadow-md', window.scrollY > 10);
+        header ? header.classList.toggle('shadow-md', window.scrollY > 10) : null;
     });
 
     // User dropdown

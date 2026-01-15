@@ -1,34 +1,35 @@
 @extends('admin.layout')
 
-@section('title', 'Categories')
+@section('title','Brands')
 
 @section('content')
-  <div class="mb-6 flex items-center justify-between">
-    <h2 class="text-lg font-semibold text-gray-900">Categories</h2>
-    <a href="{{ route('admin.categories.create') }}"
-      class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">Add
-      Category</a>
-  </div>
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+  <div class="mb-6 flex items-center justify-between">
+    <h2 class="text-lg font-semibold text-gray-900">Brands</h2>
+    <a href="{{ route('admin.brands.create') }}"
+      class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">Add
+      Brand</a>
+  </div>
+
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">ID</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Name</th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Slug</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Origin</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Active</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Actions</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-100">
-          @foreach ($categories as $category)
+          @foreach($brands as $brand)
             <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm text-gray-700">{{ $category->category_id }}</td>
-              <td class="px-4 py-3 text-sm text-gray-900">{{ $category->category_name }}</td>
-              <td class="px-4 py-3 text-sm text-gray-700">{{ $category->slug }}</td>
+              <td class="px-4 py-3 text-sm text-gray-900">{{ $brand->brand_name }}</td>
+              <td class="px-4 py-3 text-sm text-gray-700">{{ $brand->country_origin ?? '-' }}</td>
+              <td class="px-4 py-3 text-sm text-gray-700">{{ $brand->is_active ? 'Yes' : 'No' }}</td>
               <td class="px-4 py-3 text-sm flex items-center gap-3">
                 <!-- Edit -->
-                <a href="{{ route('admin.categories.edit', $category) }}" class="text-blue-600 hover:text-blue-800"
+                <a href="{{ route('admin.brands.edit', $brand) }}" class="text-blue-600 hover:text-blue-800"
                   title="Chỉnh sửa">
                   <!-- Pencil icon -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
@@ -39,12 +40,12 @@
                 </a>
 
                 <!-- Delete -->
-                <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline">
+                <form action="{{ route('admin.brands.destroy', $brand) }}" method="POST" class="inline">
                   @csrf
                   @method('DELETE')
 
                   <button type="submit" class="text-red-600 hover:text-red-800 border-none bg-white" title="Xoá"
-                    onclick="return confirm('Bạn có chắc muốn xoá danh mục này?')">
+                    onclick="return confirm('Bạn có chắc muốn xoá thương hiệu này?')">
                     <!-- Trash icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                       stroke="currentColor">
@@ -60,5 +61,4 @@
       </table>
     </div>
   </div>
-
 @endsection

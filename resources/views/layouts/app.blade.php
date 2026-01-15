@@ -7,7 +7,7 @@
     <title>Paintful Life</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased text-gray-800">
+<body class="antialiased text-gray-800 overflow-x-hidden">
     @include('partials.header')
 
     <main class="container mx-auto">

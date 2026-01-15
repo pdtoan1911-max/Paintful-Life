@@ -18,17 +18,29 @@
                     <a href="{{ route('home') }}"
                     class="px-4 py-2 text-sm rounded-full transition
                     {{ request()->routeIs('home')
-                            ? 'bg-white text-pf-accent font-medium shadow-sm'
-                            : 'text-gray-700 hover:bg-white/70 hover:text-pf-accent' }}">
+                            ? 'bg-white text-[var(--pf-accent)] font-medium shadow-sm'
+                            : 'text-gray-700 hover:bg-white/70 hover:text-[var(--pf-accent)]' }}">
                         Trang chủ
                     </a>
 
                     <a href="{{ route('products.index') }}"
                     class="px-4 py-2 text-sm rounded-full transition
                     {{ request()->routeIs('products.*')
-                            ? 'bg-white text-pf-accent font-medium shadow-sm'
-                            : 'text-gray-700 hover:bg-white/70 hover:text-pf-accent' }}">
+                            ? 'bg-white text-[var(--pf-accent)] font-medium shadow-sm'
+                            : 'text-gray-700 hover:bg-white/70 hover:text-[var(--pf-accent)]' }}">
                         Sản phẩm
+                    </a>
+                    <a href="{{ route('aboutus') }}"
+                    class="px-4 py-2 text-sm rounded-full transition {{ request()->routeIs('aboutus')
+                            ? 'bg-white text-[var(--pf-accent)] font-medium shadow-sm'
+                            : 'text-gray-700 hover:bg-white/70 hover:text-[var(--pf-accent)]' }}">
+                        Giới thiệu
+                    </a>
+                    <a href="{{ route('contactus') }}"
+                    class="px-4 py-2 text-sm rounded-full transition {{ request()->routeIs('contactus')
+                            ? 'bg-white text-[var(--pf-accent)] font-medium shadow-sm'
+                            : 'text-gray-700 hover:bg-white/70 hover:text-[var(--pf-accent)]' }}">
+                        Tư vấn
                     </a>
                 </div>
             </nav>
@@ -61,34 +73,90 @@
                 <!-- Auth -->
                 @auth
                     <div class="relative">
+                        <!-- Toggle -->
                         <button id="userToggle"
-                                class="flex items-center gap-2 p-1 rounded-xl hover:bg-gray-100 transition">
+                                class="group flex items-center gap-2 px-2 py-1 rounded-full
+                                    hover:bg-gray-100 transition cursor-pointer border-none">
                             <img src="{{ auth()->user()->avatar ?? asset('images/avatar-placeholder.png') }}"
-                                 class="w-8 h-8 rounded-full object-cover" />
-                            <span class="hidden sm:inline text-sm text-gray-700">
+                                class="w-8 h-8 rounded-full object-cover" />
+
+                            <span class="hidden sm:inline text-sm font-medium text-gray-700">
                                 {{ auth()->user()->full_name ?? auth()->user()->email }}
                             </span>
+
+                            <svg class="flex-shrink-0 w-4 h-4 text-gray-400 hidden sm:block transition-transform group-hover:rotate-180"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"/>
+                            </svg>
                         </button>
 
                         <!-- Dropdown -->
                         <div id="userMenu"
-                             class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2">
-                            <a href="{{ route('profile') }}"
-                               class="block px-4 py-2 text-sm hover:bg-gray-50">
-                                Thông tin tài khoản
-                            </a>
-                            <a href="{{ route('orders') }}"
-                               class="block px-4 py-2 text-sm hover:bg-gray-50">
-                                Lịch sử mua hàng
-                            </a>
-                            <form method="POST" action="/logout">
+                            class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl
+                                    shadow-[0_20px_40px_rgba(0,0,0,0.12)]
+                                    transition-all duration-150 origin-top-right
+                                    scale-95">
+
+                            <!-- Header -->
+                            <div class="flex items-center gap-3 px-4 py-4 bg-gray-50">
+                                <img src="{{ auth()->user()->avatar ?? asset('images/avatar-placeholder.png') }}"
+                                    class="w-10 h-10 rounded-full object-cover" />
+                                <div class="min-w-0">
+                                    <p class="text-sm font-semibold text-[var(--pf-primary)] truncate">
+                                        {{ auth()->user()->full_name ?? 'User' }}
+                                    </p>
+                                    <p class="text-xs text-gray-500 truncate">
+                                        {{ auth()->user()->email }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Menu -->
+                            <div class="py-2">
+                                <a href="{{ route('profile') }}"
+                                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700
+                                        cursor-pointer transition
+                                        hover:bg-gray-100 hover:translate-x-1">
+                                    <svg class="flex-shrink-0 w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5.121 17.804A9 9 0 1118.88 6.196M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    Thông tin tài khoản
+                                </a>
+
+                                <a href="{{ route('orders') }}"
+                                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700
+                                        cursor-pointer transition
+                                        hover:bg-gray-100 hover:translate-x-1">
+                                    <svg class="flex-shrink-0 w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 3h18l-2 13H5L3 3z"/>
+                                    </svg>
+                                    Lịch sử mua hàng
+                                </a>
+                            </div>
+
+                            <!-- Logout -->
+                            <form method="POST" action="/logout" class="p-2">
                                 @csrf
-                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50">
+                                <button
+                                    class="flex items-center gap-3 w-full px-4 py-2 text-sm text-red-600
+                                        rounded-lg cursor-pointer transition
+                                        hover:bg-red-50 hover:translate-x-1 border-none">
+                                    <svg class="flex-shrink-0 w-4 h-4" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"/>
+                                    </svg>
                                     Đăng xuất
                                 </button>
                             </form>
                         </div>
                     </div>
+
                 @else
                     <div class="hidden sm:flex items-center gap-3">
                         <a href="{{ route('login') }}"

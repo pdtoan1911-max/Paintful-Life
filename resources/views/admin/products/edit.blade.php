@@ -12,17 +12,17 @@
 
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Product Name</label>
-        <input type="text" name="product_name" value="{{ old('product_name', $product->product_name) }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
+        <input type="text" name="product_name" value="{{ old('product_name', $product->product_name) }}" class="w-full mt-1 p-2 border rounded" required>
       </div>
 
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Price</label>
-        <input type="number" step="0.01" name="price" value="{{ old('price', $product->price) }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
+        <input type="number" step="0.01" name="price" value="{{ old('price', $product->price) }}" class="w-full mt-1 p-2 border rounded" required>
       </div>
 
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Category</label>
-        <select name="category_id" class="mt-1 block w-full border-gray-300 rounded-md">
+        <select name="category_id" class="w-full mt-1 p-2 border rounded">
           <option value="">-- None --</option>
           @foreach($categories as $cat)
             <option value="{{ $cat->id }}" {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->category_name }}</option>
