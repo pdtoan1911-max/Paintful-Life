@@ -16,6 +16,17 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
+                'email' => 'admin@paintful.com',
+                'password_hash' => Hash::make('admin123'),
+                'full_name' => 'Admin User',
+                'phone_number' => '+1234567892',
+                'address' => '789 Oak St, City, State',
+                'city' => 'Chicago',
+                'user_type' => 'admin',
+                'is_active' => true,
+                'last_login' => now(),
+            ],
+            [
                 'email' => 'john.doe@example.com',
                 'password_hash' => Hash::make('password'),
                 'full_name' => 'John Doe',
@@ -36,17 +47,6 @@ class UserSeeder extends Seeder
                 'user_type' => 'customer',
                 'is_active' => true,
                 'last_login' => now()->subDays(1),
-            ],
-            [
-                'email' => 'admin@paintful.com',
-                'password_hash' => Hash::make('admin123'),
-                'full_name' => 'Admin User',
-                'phone_number' => '+1234567892',
-                'address' => '789 Oak St, City, State',
-                'city' => 'Chicago',
-                'user_type' => 'admin',
-                'is_active' => true,
-                'last_login' => now(),
             ],
         ];
 

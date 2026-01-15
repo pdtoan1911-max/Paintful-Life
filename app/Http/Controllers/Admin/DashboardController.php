@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -19,7 +20,8 @@ class DashboardController extends Controller
     {
         $totalProducts = Product::count();
         $totalOrders = Order::count();
-        $totalRevenue = Order::sum('total_amount') ?? 0;
+        $totalRevenue = Order::where('order_status', 'confirmed')
+    ->sum('total_amount');
         $ordersToday = Order::whereDate('created_at', now()->toDateString())->count();
 
         // Revenue report: group by day / month / year
@@ -131,5 +133,24 @@ class DashboardController extends Controller
             'totalProducts', 'totalOrders', 'totalRevenue', 'ordersToday',
             'revenueLabels', 'revenueData', 'revenueQtyData', 'period', 'topProducts', 'lowStockProducts', 'topViewedProducts'
         ));
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        // delete cart items, orders, etc. if needed
+        $cart = $user->cartItems();
+        $cart->delete();
+        $orders = $user->orders();
+        foreach ($orders as $order) {
+            $order->orderItems()->delete();
+            $order->delete();
+        }
+        $reviews = $user->reviews();
+        $reviews->delete();
+        $productViews = $user->productViews();
+        $productViews->delete();
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted successfully.');
     }
 }

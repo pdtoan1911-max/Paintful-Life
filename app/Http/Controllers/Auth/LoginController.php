@@ -26,9 +26,9 @@ class LoginController extends Controller
                     ->orWhere('phone_number', $credentials['login'])
                     ->first();
 
-        // if (!$user || !Hash::check($credentials['password'], $user->password_hash)) {
-        //     return back()->withErrors(['login' => 'The provided credentials do not match our records.'])->withInput();
-        // }
+        if (!$user || !Hash::check($credentials['password'], $user->password_hash)) {
+            return back()->withErrors(['login' => 'The provided credentials do not match our records.'])->withInput();
+        }
 
         if (isset($user->is_active) && !$user->is_active) {
             return back()->withErrors(['email' => 'Your account is inactive.']);
@@ -45,7 +45,7 @@ class LoginController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        return redirect()->intended(route('profile'));
+        return redirect()->intended(route('home'));
     }
 
     public function logout(Request $request)

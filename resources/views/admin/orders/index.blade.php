@@ -8,7 +8,7 @@
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Order ID</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Order Code</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Customer</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500">Phone</th>
             <th class="px-4 py-3 text-right text-xs font-medium text-gray-500">Total</th>
@@ -21,7 +21,7 @@
         <tbody class="bg-white divide-y divide-gray-100">
           @foreach ($orders as $order)
             <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm text-gray-700">#{{ $order->id }}</td>
+              <td class="px-4 py-3 text-sm text-gray-700">#{{ $order->order_code }}</td>
               <td class="px-4 py-3 text-sm text-gray-900">{{ $order->customer_name }}</td>
               <td class="px-4 py-3 text-sm text-gray-700">{{ $order->phone }}</td>
               <td class="px-4 py-3 text-sm text-gray-900 text-right">{{ $order->total_amount }}</td>

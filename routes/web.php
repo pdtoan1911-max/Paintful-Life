@@ -280,7 +280,7 @@ Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(fun
     })->name('orders.cancel');
 
     Route::get('/users', function () {
-        $users = App\Models\User::paginate(20);
+        $users = App\Models\User::where('user_type', "customer")->paginate(20);
         return view('admin.users.index', compact('users'));
     })->name('users.index');
 
@@ -294,4 +294,9 @@ Route::prefix('/admin')->middleware(['auth','admin'])->name('admin.')->group(fun
         $user->save();
         return redirect()->back()->with('success', 'User status updated.');
     })->name('users.toggle');
+    
+    Route::post('/users/{user}/delete', function (App\Models\User $user) {
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted.');
+    })->name('users.delete');
 });

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('paint_base');
             $table->string('finish_type');
-            $table->string('volume');
-            $table->string('coverage_area');
+            $table->integer('volume');
+            $table->integer('coverage_area');
             $table->decimal('cost_price', 10, 2);
             $table->decimal('price', 10, 2);
             $table->integer('stock_quantity');

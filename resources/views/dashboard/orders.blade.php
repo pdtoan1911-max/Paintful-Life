@@ -16,7 +16,7 @@
                     <div class="border rounded-lg p-4 mb-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-medium">
-                                Đơn #{{ $order->code }}
+                                Đơn #{{ $order->order_code }}
                             </span>
                             <span class="text-sm text-gray-500">
                                 {{ $order->created_at->format('d/m/Y') }}
@@ -30,10 +30,10 @@
                             </span>
 
                             <span class="px-2 py-1 rounded text-xs
-                                {{ $order->status === 'completed'
+                                {{ $order->order_status === 'confirmed'
                                     ? 'bg-green-100 text-green-600'
-                                    : 'bg-yellow-100 text-yellow-600' }}">
-                                {{ ucfirst($order->status) }}
+                                    : $order->order_status === 'cancelled' ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600' }}">
+                                {{ ucfirst($order->order_status) }}
                             </span>
                         </div>
                     </div>

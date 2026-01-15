@@ -23,6 +23,9 @@
                                 class="text-red-500">*</span></label>
                         <input name="email" type="email" required placeholder="Email" value="{{ old('email') }}"
                             class="mt-1 block w-full rounded-md border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]" />
+                        @error('email')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>

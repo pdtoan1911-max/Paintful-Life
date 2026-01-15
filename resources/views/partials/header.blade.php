@@ -7,7 +7,7 @@
                 <div class="w-10 h-10 rounded-lg bg-[var(--pf-accent)] text-white flex items-center justify-center font-bold">
                     PL
                 </div>
-                <span class="text-lg font-semibold hidden sm:inline">
+                <span class="text-[var(--pf-accent)] font-semibold hidden sm:inline">
                     Paintful Life
                 </span>
             </a>

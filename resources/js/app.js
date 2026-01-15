@@ -30,6 +30,21 @@ document.addEventListener('click', function (e) {
     }
 });
 
+document.addEventListener('click', function (e) {
+    const t = e.target;
+    if (t.matches('.btn-add-product')) {
+        e.preventDefault();
+        const id = t.dataset.id;
+        const qtyInput = document.querySelector('#qty');
+        const qty = qtyInput ? Number(qtyInput.value || 1) : 1;
+        addToCart(id, qty);
+        t.innerText = 'Đã thêm';
+        setTimeout(() => t.innerText = 'Thêm', 1200);
+        
+        const badge = document.getElementById('cart-badge');
+        badge.classList.remove('hidden');
+    }
+});
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function () {
     const btn = document.querySelector('.mobile-toggle');

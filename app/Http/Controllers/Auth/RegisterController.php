@@ -37,6 +37,6 @@ class RegisterController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
         // Redirect to dashboard or intended page
-        return redirect()->intended('dashboard');
+        return redirect()->intended(route('home'));
     }
 }

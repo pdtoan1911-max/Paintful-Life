@@ -209,7 +209,7 @@
                                     {{ number_format($product->price, 0, ',', '.') }}₫
                                 </div>
 
-                                <button class="btn-add pf-product-cta ml-auto"
+                                <button class="btn-add-product pf-product-cta ml-auto cursor-pointer"
                                         data-id="{{ $product->product_id }}">
                                     Thêm
                                 </button>

@@ -35,9 +35,8 @@
                 </a>
                 <form action="{{ route('admin.users.toggle', $user) }}" method="POST" class="inline-block">
                   @csrf
-                  <button type="submit"
-                    class="p-2 border-none bg-white rounded cursor-pointer
-               {{ $user->is_active ? 'text-red-600 border-red-600' : 'text-green-600 border-green-600' }}"
+                  <button type="submit" class="p-2 border-none bg-transparent rounded cursor-pointer
+                   {{ $user->is_active ? 'text-red-600 border-red-600' : 'text-green-600 border-green-600' }}"
                     title="{{ $user->is_active ? 'Lock user' : 'Unlock user' }}">
                     @if($user->is_active)
                       {{-- Lock icon --}}
@@ -56,6 +55,19 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 11V7a4 4 0 00-7.75-1" />
                       </svg>
                     @endif
+                  </button>
+                </form>
+                <form action="{{ route('admin.users.delete', $user) }}" method="POST" class="inline-block">
+                  @csrf
+                  <button type="submit" class="p-2 border-none bg-transparent rounded cursor-pointer
+                   text-red-600 border-red-600" title="Delete user">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
+                                 a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6
+                                 M1 7h22m5-3h-6a2 2 0 00-2-2h-4a2 2 0
+                                 00-2 2H5" />
+                    </svg>
                   </button>
                 </form>
               </td>

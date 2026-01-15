@@ -78,7 +78,7 @@ class CheckoutController extends Controller
         $total = $subtotal + $shippingFee;
 
         $order = Order::create([
-            'user_id' => $user ? $user->user_id : null,
+            'user_id' => $user ? $user->user_id : 1,
             'order_code' => 'ORD' . time(),
             'customer_name' => $request->input('customer_name'),
             'phone_number' => $request->input('phone_number'),
