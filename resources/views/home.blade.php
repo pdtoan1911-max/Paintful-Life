@@ -98,10 +98,10 @@
                          class="w-full h-32 object-cover group-hover:scale-105 transition"
                          loading="lazy">
                     <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <span class="text-white font-semibold">Trẻ em</span>
+                        <span class="text-white font-semibold">Lót nền</span>
                     </div>
                 </a>
-                <a href="products?category=3" class="relative rounded-xl overflow-hidden group">
+                <a href="products?category=4" class="relative rounded-xl overflow-hidden group">
                     <img src="{{ asset('images/categories/placeholder4.png') }}"
                          class="w-full h-32 object-cover group-hover:scale-105 transition"
                          loading="lazy">
