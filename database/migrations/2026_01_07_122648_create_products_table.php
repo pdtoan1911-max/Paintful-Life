@@ -35,6 +35,22 @@ return new class extends Migration
 
             $table->foreign('brand_id')->references('brand_id')->on('brands');
             $table->foreign('category_id')->references('category_id')->on('categories');
+
+            $table->index('is_active');
+            $table->index('category_id');
+            $table->index('brand_id');
+
+            $table->index(['is_active', 'category_id', 'price']);
+
+            $table->index('volume');
+            $table->index('finish_type');
+
+            $table->index('created_at');
+            $table->index('total_sold');
+            $table->index('coverage_area');
+            $table->index('rating_avg');
+
+            $table->index(['is_featured', 'is_active']);
         });
     }
 

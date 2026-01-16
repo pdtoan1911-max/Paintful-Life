@@ -33,6 +33,16 @@
                     </div>
 
                     <div>
+                        <p class="text-gray-500">Thành phố</p>
+                        <p class="font-medium">{{ auth()->user()->city ?? '—' }}</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500">Xã/Phường</p>
+                        <p class="font-medium">{{ auth()->user()->district ?? '—' }}</p>
+                    </div>
+
+                    <div>
                         <p class="text-gray-500">Địa chỉ</p>
                         <p class="font-medium">{{ auth()->user()->address ?? '—' }}</p>
                     </div>
@@ -80,6 +90,26 @@
                                     <input name="phone_number" value="{{ old('phone_number', auth()->user()->phone_number) }}" 
                                     class="w-full mt-1 p-2 border rounded" /> 
                                     @error('phone_number') 
+                                    <div class="text-red-600 text-sm">{{ $message }}</div> 
+                                    @enderror 
+                                </div>
+
+                                <!-- City -->
+                                <div class="flex flex-col px-2 py-3"> 
+                                    <label class="text-gray-600">Thành phố</label> 
+                                    <input name="city" value="{{ old('city', auth()->user()->city) }}" 
+                                    class="w-full mt-1 p-2 border rounded" /> 
+                                    @error('city') 
+                                    <div class="text-red-600 text-sm">{{ $message }}</div> 
+                                    @enderror 
+                                </div>
+
+                                <!-- District -->
+                                <div class="flex flex-col px-2 py-3"> 
+                                    <label class="text-gray-600">Xã/Phường</label> 
+                                    <input name="district" value="{{ old('district', auth()->user()->district) }}" 
+                                    class="w-full mt-1 p-2 border rounded" /> 
+                                    @error('district') 
                                     <div class="text-red-600 text-sm">{{ $message }}</div> 
                                     @enderror 
                                 </div>

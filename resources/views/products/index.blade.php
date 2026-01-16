@@ -3,11 +3,15 @@
 @section('content')
 
 @php
+    $selectedBrand   = request('brand');
     $selectedCategory = request('category');
     $selectedVolumes  = (array) request()->input('volume', []);
     $selectedFinishes = (array) request()->input('finish', []);
     $minPrice = request('min_price');
     $maxPrice = request('max_price');
+    $selectedVolume = request('volume');
+    $min_coverage = request('min_coverage');
+    $max_coverage = request('max_coverage');
 @endphp
 
 <div class="max-w-7xl mx-auto px-4 py-10">
@@ -42,7 +46,25 @@
                 <form method="GET"
                       action="{{ route('products.index') }}"
                       class="mt-4 space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Thương hiệu
+                        </label>
 
+                        <select name="brand"
+                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm
+                                focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]">
+
+                            <option value="">Tất cả</option>
+
+                            @foreach ($brands as $cat)
+                                <option value="{{ $cat->brand_id }}"
+                                    {{ (string)$selectedBrand === (string)$cat->brand_id ? 'selected' : '' }}>
+                                    {{ $cat->brand_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <!-- Category -->
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-2">
@@ -91,25 +113,46 @@
                     </div>
 
                     <!-- Volume -->
-                    @if($volumes->count())
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600 mb-2">
-                                Dung tích
-                            </label>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Dung tích (L)
+                        </label>
 
-                            <div class="grid grid-cols-1 gap-2">
-                                @foreach($volumes as $volume)
-                                    <label class="flex items-center gap-2 text-sm">
-                                        <input type="checkbox"
-                                               name="volume[]"
-                                               value="{{ $volume }}"
-                                               {{ in_array($volume, $selectedVolumes, true) ? 'checked' : '' }}>
-                                        <span class="text-gray-700">{{ $volume }}</span>
-                                    </label>
-                                @endforeach
-                            </div>
+                        <select name="volume"
+                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm
+                                focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]">
+
+                            <option value="">Tất cả</option>
+                        
+                            @foreach ($volumes as $volume)
+                                <option value="{{ $volume }}"
+                                    {{ (string)$selectedVolume === (string)$volume ? 'selected' : '' }}>
+                                    {{ $volume }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Coverage -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Độ phủ (m²/L)
+                        </label>
+
+                        <div class="flex items-center gap-2">
+                            <input type="number"
+                                   name="min_coverage"
+                                   value="{{ $min_coverage }}"
+                                   placeholder="Từ"
+                                   class="w-1/2 px-3 py-2 rounded-md border border-gray-200 text-sm">
+
+                            <input type="number"
+                                   name="max_coverage"
+                                   value="{{ $max_coverage }}"
+                                   placeholder="Đến"
+                                   class="w-1/2 px-3 py-2 rounded-md border border-gray-200 text-sm">
                         </div>
-                    @endif
+                    </div>
 
                     <!-- Finish -->
                     @if($finishes->count())
@@ -143,7 +186,7 @@
         <main class="lg:col-span-9">
 
             <!-- Header -->
-            {{-- <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-semibold">
                     Tất cả sản phẩm
                 </h2>
@@ -153,7 +196,7 @@
                     – {{ $products->lastItem() ?? 0 }}
                     / {{ $products->total() }}
                 </div>
-            </div> --}}
+            </div>
 
             <!-- Product Grid -->
             <div id="product-list"
@@ -163,7 +206,7 @@
 
                     @php
                         $rating = is_numeric($product->rating_avg ?? null)
-                            ? max(1, min(5, (int) round($product->rating_avg)))
+                            ? max(0, min(5, (int) round($product->rating_avg)))
                             : 0;
 
                         $reviewsCount = is_numeric($product->reviews_count ?? null)
@@ -225,8 +268,36 @@
             </div>
 
             <!-- Pagination -->
-            <div class="mt-8">
-                {{ $products->links() }}
+            <div class="mt-8 w-full">
+                {{-- {{ $products->links() }} --}}
+                @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator)
+      <div class="mt-4 flex items-center justify-center">
+        @php $products->appends(request()->query()); $cur = $products->currentPage(); $last = $products->lastPage(); @endphp
+
+        {{-- Back 1 page --}}
+        <a href="{{ $products->previousPageUrl() ?: '#' }}" class="px-3 py-1 mx-1 rounded {{ $products->previousPageUrl() ? 'bg-gray-100' : 'hidden' }}" aria-label="Prev">
+          ‹
+        </a>
+
+        {{-- Prev page if exists --}}
+        @if($cur > 1)
+          <a href="{{ $products->url($cur - 1) }}" class="px-3 py-1 mx-1 rounded bg-gray-100">{{ $cur - 1 }}</a>
+        @endif
+
+        {{-- Current page --}}
+        <span class="px-3 py-1 mx-1 rounded bg-[var(--pf-accent)] text-white">{{ $cur }}</span>
+
+        {{-- Next page if exists --}}
+        @if($cur < $last)
+          <a href="{{ $products->url($cur + 1) }}" class="px-3 py-1 mx-1 rounded bg-gray-100">{{ $cur + 1 }}</a>
+        @endif
+
+        {{-- Forward 1 page --}}
+        <a href="{{ $products->nextPageUrl() ?: '#' }}" class="px-3 py-1 mx-1 rounded {{ $products->nextPageUrl() ? 'bg-gray-100' : 'hidden' }}" aria-label="Next">
+          ›
+        </a>
+      </div>
+    @endif
             </div>
 
             <!-- Suggested -->
@@ -243,7 +314,7 @@
 
                                 <div class="aspect-square bg-gray-50 rounded overflow-hidden">
                                     <img src="{{ $s->image_url ?: asset('images/products/placeholder.png') }}"
-                                         class="w-full h-full object-cover">
+                                         class="w-full h-full object-contain">
                                 </div>
 
                                 <div class="mt-2 text-sm font-medium line-clamp-2">
@@ -262,5 +333,4 @@
         </main>
     </div>
 </div>
-
 @endsection

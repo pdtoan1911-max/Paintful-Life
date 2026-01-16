@@ -115,7 +115,7 @@
             @php
               $preview = old('image_preview');
               if (!$preview) {
-                $preview = $isEdit && isset($product->image_url) && $product->image_url ? asset($product->image_url) : asset('images/products/placeholder.png');
+                $preview = $isEdit && isset($product->image_url) && $product->image_url ? asset($product->image_url) : "";
               }
             @endphp
             <img id="imagePreview" src="{{ $preview }}" alt="Preview" class="w-24 h-24 rounded object-cover border border-gray-200">

@@ -32,7 +32,9 @@
                             <span class="px-2 py-1 rounded text-xs
                                 {{ $order->order_status === 'confirmed'
                                     ? 'bg-green-100 text-green-600'
-                                    : $order->order_status === 'cancelled' ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600' }}">
+                                    : ($order->order_status === 'cancelled'
+            ? 'bg-yellow-100 text-yellow-600'
+            : 'bg-gray-100 text-gray-600') }}">
                                 {{ ucfirst($order->order_status) }}
                             </span>
                         </div>

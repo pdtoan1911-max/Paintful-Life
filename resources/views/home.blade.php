@@ -180,11 +180,11 @@
         </p>
 
         <div class="mt-6 flex flex-col sm:flex-row justify-center gap-3">
-            <a href="/contactus" class="bg-white text-[var(--pf-accent)] px-6 py-3 rounded-lg font-semibold">
+            <a href="/contactus" class="bg-white text-[var(--pf-accent)] px-6 py-3 rounded-lg font-semibold hover:bg-white/90 transition">
                 Nhận tư vấn
             </a>
             <a href="{{ route('products.index') }}"
-               class="border border-white px-6 py-3 rounded-lg">
+               class="border border-white px-6 py-3 rounded-lg hover:bg-white/20 transition">
                 Xem sản phẩm
             </a>
         </div>

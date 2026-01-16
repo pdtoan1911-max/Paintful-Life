@@ -1,14 +1,50 @@
 @extends('admin.layout')
 
 @section('title', 'Products')
-
+@php
+    $selectedBrand = request('brand');
+@endphp
 @section('content')
   <div class="mb-6 flex items-center justify-between">
     <h2 class="text-lg font-semibold text-gray-900">Products</h2>
-    <a href="{{ route('admin.products.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">Add Product</a>
+    <a href="{{ route('admin.products.create') }}"
+      class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">Add
+      Product</a>
   </div>
 
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <form method="GET" class="flex items-center gap-2">
+        @if(request('q'))<input type="hidden" name="q" value="{{ request('q') }}">@endif
+        <div>
+          <label class="block text-sm font-medium text-gray-600 mb-2">
+            Thương hiệu
+          </label>
+
+          <select name="brand" class="brandfilter w-full rounded-md border border-gray-300 px-3 py-2 text-sm
+                                  focus:outline-none focus:ring-2 focus:ring-[var(--pf-accent)]">
+
+            <option value="">Tất cả</option>
+
+            @foreach ($brands as $cat)
+              <option value="{{ $cat->brand_id }}" {{ (string) $selectedBrand === (string) $cat->brand_id ? 'selected' : '' }}>
+                {{ $cat->brand_name }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+      </form>
+
+      <form method="GET" class="ml-auto">
+        {{-- @if(request('start_date'))<input type="hidden" name="start_date" value="{{ request('start_date') }}">@endif --}}
+        @if(request('brand'))<input type="hidden" name="brand" value="{{ request('brand') }}">@endif
+        <div class="flex items-center">
+          <input type="search" name="q" placeholder="Tìm theo tên sản phẩm" value="{{ request('q') }}"
+            class="px-3 py-1 border w-64">
+          <button type="submit" class="px-3 py-1 h-[25px] border bg-gray-100 cursor-pointer hover:bg-gray-200">Tìm kiếm</button>
+        </div>
+      </form>
+    </div>
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -25,7 +61,8 @@
           @foreach ($products as $product)
             <tr class="hover:bg-gray-50">
               <td class="px-4 py-3">
-                <img src="{{ $product->image_url ?asset($product->image_url): asset('images/products/placeholder.png') }}" alt="" class="w-12 h-12 rounded object-cover">
+                <img src="{{ $product->image_url ? asset($product->image_url) : asset('images/products/placeholder.png') }}"
+                  alt="" class="w-12 h-12 rounded object-cover">
               </td>
               <td class="px-4 py-3 text-sm text-gray-900">{{ $product->product_name }}</td>
               <td class="px-4 py-3 text-sm text-gray-700">{{ $product->brand->brand_name ?? '-' }}</td>
@@ -66,4 +103,46 @@
     </div>
   </div>
 
+  @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4 flex items-center justify-center">
+      @php $products->appends(request()->query());
+        $cur = $products->currentPage();
+      $last = $products->lastPage(); @endphp
+
+      {{-- Back 1 page --}}
+      <a href="{{ $products->previousPageUrl() ?: '#' }}"
+        class="px-3 py-1 mx-1 rounded {{ $products->previousPageUrl() ? 'bg-white' : 'bg-gray-100' }}" aria-label="Prev">
+        ‹
+      </a>
+
+      {{-- Prev page if exists --}}
+      @if($cur > 1)
+        <a href="{{ $products->url($cur - 1) }}" class="px-3 py-1 mx-1 rounded bg-white">{{ $cur - 1 }}</a>
+      @endif
+
+      {{-- Current page --}}
+      <span class="px-3 py-1 mx-1 rounded bg-[var(--pf-accent)] text-white">{{ $cur }}</span>
+
+      {{-- Next page if exists --}}
+      @if($cur < $last)
+        <a href="{{ $products->url($cur + 1) }}" class="px-3 py-1 mx-1 rounded bg-white">{{ $cur + 1 }}</a>
+      @endif
+
+      {{-- Forward 1 page --}}
+      <a href="{{ $products->nextPageUrl() ?: '#' }}"
+        class="px-3 py-1 mx-1 rounded {{ $products->nextPageUrl() ? 'bg-white' : 'bg-gray-100' }}" aria-label="Next">
+        ›
+      </a>
+    </div>
+  @endif
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const dateInputs = document.querySelectorAll('.brandfilter');
+      dateInputs.forEach(input => {
+        input.addEventListener('change', function () {
+          this.form.submit();
+        });
+      });
+    });
+  </script>
 @endsection

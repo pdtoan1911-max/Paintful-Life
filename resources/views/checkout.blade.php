@@ -48,12 +48,8 @@
                                 <input name="city" value="{{ old('city', $user->city ?? '') }}" required class="mt-1 block w-full rounded-md border border-gray-200 py-2" />
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-700">Quận/Huyện <span class="text-red-500">*</span></label>
-                                <input name="district" value="{{ old('district', $user->district ?? '') }}" required class="mt-1 block w-full rounded-md border border-gray-200 py-2" />
-                            </div>
-                            <div>
                                 <label class="block text-sm text-gray-700">Phường/Xã <span class="text-red-500">*</span></label>
-                                <input name="ward" value="{{ old('ward', $user->ward ?? '') }}" required class="mt-1 block w-full rounded-md border border-gray-200 py-2" />
+                                <input name="district" value="{{ old('district', $user->district ?? '') }}" required class="mt-1 block w-full rounded-md border border-gray-200 py-2" />
                             </div>
                         </div>
 
@@ -151,8 +147,7 @@
                 'input[name="customer_name"]',
                 'input[name="phone_number"]',
                 'input[name="city"]',
-                'input[name="district"]',
-                'input[name="ward"]'
+                'input[name="district"]'
             ];
 
             const warning = document.getElementById('recipient-warning');

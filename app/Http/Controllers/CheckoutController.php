@@ -82,7 +82,7 @@ class CheckoutController extends Controller
             'order_code' => 'ORD' . time(),
             'customer_name' => $request->input('customer_name'),
             'phone_number' => $request->input('phone_number'),
-            'shipping_address' => $request->input('shipping_address'),
+            'shipping_address' => $request->input('shipping_address').', '.$request->input('district'),
             'city' => $request->input('city'),
             'subtotal' => $subtotal,
             'shipping_fee' => $shippingFee,

@@ -2,63 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductView;
 use App\Models\Category;
 use App\Models\Review;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        $query = Product::where('is_active', 1)
+            ->when(
+                $request->brand,
+                fn($q) =>
+                $q->where('brand_id', $request->brand)
+            )
+            ->when(
+                $request->category,
+                fn($q) =>
+                $q->where('category_id', $request->category)
+            )
+            ->when(
+                $request->min_price,
+                fn($q) =>
+                $q->where('price', '>=', $request->min_price)
+            )
+            ->when(
+                $request->max_price,
+                fn($q) =>
+                $q->where('price', '<=', $request->max_price)
+            )
+            ->when(
+                $request->min_coverage,
+                fn($q) =>
+                $q->where('coverage_area', '>=', $request->min_coverage)
+            )
+            ->when(
+                $request->max_coverage,
+                fn($q) =>
+                $q->where('coverage_area', '<=', $request->max_coverage)
+            )
+            ->when(
+                $request->finish,
+                fn($q) =>
+                $q->whereIn('finish_type', (array) $request->finish)
+            )
+            ->when(
+                $request->volume,
+                fn($q) =>
+                $q->whereIn('volume', (array) $request->volume)
+            );
 
-        $baseQuery = Product::query()
-            ->where('is_active', 1);
+        $products = $query->latest()->paginate(12);
 
-        if ($request->filled('category')) {
-            $baseQuery->where('category_id', $request->category);
-        }
-
-        if ($request->filled('min_price')) {
-            $baseQuery->where('price', '>=', (int) $request->min_price);
-        }
-
-        if ($request->filled('max_price')) {
-            $baseQuery->where('price', '<=', (int) $request->max_price);
-        }
-
-        if ($request->filled('volume')) {
-            $baseQuery->whereIn('volume', (array) $request->volume);
-        }
-
-        if ($request->filled('finish')) {
-            $baseQuery->whereIn('finish_type', (array) $request->finish);
-        }
-
-        $products = (clone $baseQuery)
-            ->orderByDesc('created_at')
-            ->paginate(12)
-            ->withQueryString();
-
-        $volumes = (clone $baseQuery)
-            ->whereNotNull('volume')
-            ->distinct()
-            ->orderBy('volume')
-            ->pluck('volume');
-
-        $finishes = (clone $baseQuery)
+        $finishes = Product::where('is_active', 1)
             ->whereNotNull('finish_type')
             ->distinct()
             ->orderBy('finish_type')
             ->pluck('finish_type');
 
-        $categories = Category::where('is_active', 1)
-            ->orderBy('category_name')
-            ->get();
+        $volumes = Product::where('is_active', 1)
+            ->whereNotNull('volume')
+            ->distinct()
+            ->orderBy('volume')
+            ->pluck('volume');
 
-        $suggested = Product::where('is_active', 1)
+        $categories = Cache::remember(
+            'categories_active',
+            3600,
+            fn() =>
+            Category::where('is_active', 1)->orderBy('category_name')->get()
+        );
+
+        $brands = Cache::remember(
+            'brands_active',
+            3600,
+            fn() =>
+            Brand::where('is_active', 1)->orderBy('brand_name')->get()
+        );
+
+        $suggested = Product::select('product_id', 'product_name', 'price', 'image_url')
+            ->where('is_active', 1)
             ->where('is_featured', 1)
             ->latest()
             ->limit(8)
@@ -67,9 +95,10 @@ class ProductController extends Controller
         return view('products.index', compact(
             'products',
             'categories',
-            'volumes',
             'finishes',
-            'suggested'
+            'volumes',
+            'suggested',
+            'brands'
         ));
     }
 

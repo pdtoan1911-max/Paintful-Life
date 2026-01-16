@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();
+            $table->string('district')->nullable();
             $table->string('user_type')->default('customer');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
